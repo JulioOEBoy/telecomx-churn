@@ -1,21 +1,49 @@
-# telecomx-churn
+# Telecom X — Parte 2: Previsão de Churn
 
-Entrega do desafio TelecomX — **ETL + EDA** (Parte 1).
+Este repositório (Parte 2) usa o dataset tratado na **Parte 1** para treinar modelos preditivos e analisar as variáveis mais importantes para churn.
 
-## Estrutura
-- `notebooks_01_etl.ipynb` — ETL interativo (gera dataset processado)
-- `notebooks_02_eda.ipynb` — EDA interativo (gera gráficos e relatório)
-- `scripts/run_etl.py` — baixa o JSON e gera `data/processed/telecom_transformed.parquet`
-- `scripts/generate_figs.py` — (opcional) gera figuras em `figs/`
-- `data/raw/` — raw JSON (não versionar)
-- `data/processed/` — dataset tratado (não versionar)
-- `figs/` — figuras salvas (pode versionar)
-- `relatorio_telecomx.md` — relatório final (gerado pelo EDA)
+## Pré-requisito
+Você precisa ter o dataset processado (Parte 1):
+
+- `data/processed/telecom_transformed.parquet`
+- `data/processed/telecom_transformed.csv`
+
+No seu projeto Parte 1, rode:
+```bash
+python scripts/run_etl.py
+```
+
+## Arquivos principais
+- `notebooks_03_churn_prediction.ipynb` — notebook completo (pré-processamento, modelos, métricas, importância, export do modelo)
+- `scripts/train_models.py` — treino via linha de comando (gera `models/churn_model.joblib` e `relatorio_parte2.md`)
+- `scripts/predict_churn.py` — inferência via linha de comando (gera `preds.csv`)
+
+## Modelos avaliados
+- Regressão Logística
+- KNN
+- SVM (linear)
+- Random Forest
+
+Métricas:
+- ROC-AUC
+- PR-AUC
+- Precision/Recall/F1
+- Matriz de confusão
 
 ## Como rodar (local)
-1. Instale dependências: `pip install -r requirements.txt`
-2. Rode ETL: `python scripts/run_etl.py`
-3. Rode EDA (recomendado): abra `notebooks_02_eda.ipynb` e execute tudo
-4. (Opcional) Gere figuras via script: `python scripts/generate_figs.py`
+1. Instale dependências:
+```bash
+pip install -r requirements_parte2.txt
+```
 
-> Dica: o notebook de EDA também gera `figs/` e escreve `relatorio_telecomx.md` automaticamente.
+2. Rode o notebook:
+- `notebooks_03_churn_prediction.ipynb`
+
+Ou via script:
+```bash
+python scripts/train_models.py
+```
+
+## Saídas
+- `models/churn_model.joblib` (melhor modelo)
+- `relatorio_parte2.md` (resumo de performance e top variáveis)
